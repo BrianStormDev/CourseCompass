@@ -1,12 +1,24 @@
-import { useState } from "react";
-import CoursePlannerQuestionnaire from './Components/CoursePlannerQuestionnaire/CoursePlannerQuestionnaire.js';
+import { AuthProvider, useAuth } from './AuthContext';
+import CoursePlannerQuestionnaire from './Components/CoursePlannerQuestionnaire';
+import Login from './Components/Login'; 
+
+function AppContent() {
+  const { user } = useAuth();
+
+  if (!user) {
+    return <Login />;
+  }
+
+  return <CoursePlannerQuestionnaire />;
+}
 
 function App() {
   return (
-    <div className="App">
-      <CoursePlannerQuestionnaire />
-    </div>
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 
 export default App;
+
