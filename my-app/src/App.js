@@ -108,7 +108,7 @@ Though smaller in volume, RL research demonstrates significant quality improveme
 
     try {
       // Replace with actual API call to Python backend
-      const response = await fetch('/api/chat', {
+      const response = await fetch('/api/claudeChat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
