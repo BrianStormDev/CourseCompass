@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-// import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Send, Calendar, TrendingUp } from 'lucide-react';
 import './App.css';
-import Chart from './Chart.js';
+// import Chart from './Chart.js';
 
 const App = () => {
   const [selectedDate, setSelectedDate] = useState('2024-06-21');
@@ -15,14 +15,367 @@ const App = () => {
 
   // Sample data - in real implementation, this would come from Python backend
   const [trendData, setTrendData] = useState([
-    { date: '2024-06-15', 'Transformers': 245, 'Diffusion Models': 189, 'Reinforcement Learning': 156, 'Computer Vision': 201, 'NLP': 234 },
-    { date: '2024-06-16', 'Transformers': 251, 'Diffusion Models': 195, 'Reinforcement Learning': 163, 'Computer Vision': 198, 'NLP': 241 },
-    { date: '2024-06-17', 'Transformers': 248, 'Diffusion Models': 203, 'Reinforcement Learning': 171, 'Computer Vision': 205, 'NLP': 238 },
-    { date: '2024-06-18', 'Transformers': 263, 'Diffusion Models': 198, 'Reinforcement Learning': 158, 'Computer Vision': 212, 'NLP': 245 },
-    { date: '2024-06-19', 'Transformers': 270, 'Diffusion Models': 215, 'Reinforcement Learning': 174, 'Computer Vision': 208, 'NLP': 252 },
-    { date: '2024-06-20', 'Transformers': 275, 'Diffusion Models': 221, 'Reinforcement Learning': 169, 'Computer Vision': 219, 'NLP': 258 },
-    { date: '2024-06-21', 'Transformers': 282, 'Diffusion Models': 228, 'Reinforcement Learning': 181, 'Computer Vision': 225, 'NLP': 264 }
-  ]);
+  {
+    "date": "2025-03-24",
+    "AI Security and Adversarial Defense": 11,
+    "Causal Inference and Treatment Effects": 3,
+    "Cross-lingual Reasoning and SQL Tasks": 28,
+    "Emotion and Voice Recognition": 21,
+    "Graph Representations and Network Analysis": 3,
+    "Neuromorphic and Chemical Modeling": 8,
+    "Non-Euclidean Clustering and Learning": 1,
+    "Optimization and Scheduling Algorithms": 3,
+    "Reinforcement Learning and Bandits": 3,
+    "Topic -1": 33,
+    "Weather Prediction and Renewable Energy": 3,
+    "Wireless Communication and Signal Processing": 1
+  },
+  {
+    "date": "2025-03-25",
+    "AI Security and Adversarial Defense": 13,
+    "Causal Inference and Treatment Effects": 6,
+    "Cross-lingual Reasoning and SQL Tasks": 56,
+    "Emotion and Voice Recognition": 71,
+    "Graph Representations and Network Analysis": 5,
+    "Neuromorphic and Chemical Modeling": 23,
+    "Non-Euclidean Clustering and Learning": 1,
+    "Optimization and Scheduling Algorithms": 1,
+    "Reinforcement Learning and Bandits": 8,
+    "Topic -1": 95,
+    "Weather Prediction and Renewable Energy": 9,
+    "Wireless Communication and Signal Processing": 2
+  },
+  {
+    "date": "2025-03-26",
+    "AI Security and Adversarial Defense": 13,
+    "Causal Inference and Treatment Effects": 3,
+    "Cross-lingual Reasoning and SQL Tasks": 36,
+    "Emotion and Voice Recognition": 28,
+    "Graph Representations and Network Analysis": 2,
+    "Neuromorphic and Chemical Modeling": 7,
+    "Non-Euclidean Clustering and Learning": 2,
+    "Optimization and Scheduling Algorithms": 1,
+    "Reinforcement Learning and Bandits": 3,
+    "Topic -1": 55,
+    "Weather Prediction and Renewable Energy": 2,
+    "Wireless Communication and Signal Processing": 2
+  },
+  {
+    "date": "2025-03-27",
+    "AI Security and Adversarial Defense": 2,
+    "Causal Inference and Treatment Effects": 2,
+    "Cross-lingual Reasoning and SQL Tasks": 11,
+    "Emotion and Voice Recognition": 12,
+    "Graph Representations and Network Analysis": 3,
+    "Neuromorphic and Chemical Modeling": 6,
+    "Non-Euclidean Clustering and Learning": 2,
+    "Optimization and Scheduling Algorithms": 1,
+    "Reinforcement Learning and Bandits": 3,
+    "Topic -1": 14,
+    "Weather Prediction and Renewable Energy": 1,
+    "Wireless Communication and Signal Processing": 2
+  },
+  {
+    "date": "2025-03-28",
+    "AI Security and Adversarial Defense": 5,
+    "Causal Inference and Treatment Effects": 4,
+    "Cross-lingual Reasoning and SQL Tasks": 28,
+    "Emotion and Voice Recognition": 14,
+    "Graph Representations and Network Analysis": 1,
+    "Neuromorphic and Chemical Modeling": 9,
+    "Non-Euclidean Clustering and Learning": 1,
+    "Optimization and Scheduling Algorithms": 1,
+    "Reinforcement Learning and Bandits": 2,
+    "Topic -1": 30,
+    "Weather Prediction and Renewable Energy": 5,
+    "Wireless Communication and Signal Processing": 1
+  },
+  {
+    "date": "2025-03-29",
+    "AI Security and Adversarial Defense": 2,
+    "Causal Inference and Treatment Effects": 3,
+    "Cross-lingual Reasoning and SQL Tasks": 1,
+    "Emotion and Voice Recognition": 4,
+    "Graph Representations and Network Analysis": 2,
+    "Neuromorphic and Chemical Modeling": 1,
+    "Non-Euclidean Clustering and Learning": 1,
+    "Optimization and Scheduling Algorithms": 2,
+    "Reinforcement Learning and Bandits": 12,
+    "Topic -1": 7,
+    "Weather Prediction and Renewable Energy": 1,
+    "Wireless Communication and Signal Processing": 1
+  },
+  {
+    "date": "2025-03-30",
+    "AI Security and Adversarial Defense": 11,
+    "Causal Inference and Treatment Effects": 3,
+    "Cross-lingual Reasoning and SQL Tasks": 33,
+    "Emotion and Voice Recognition": 35,
+    "Graph Representations and Network Analysis": 1,
+    "Neuromorphic and Chemical Modeling": 19,
+    "Non-Euclidean Clustering and Learning": 1,
+    "Optimization and Scheduling Algorithms": 1,
+    "Reinforcement Learning and Bandits": 1,
+    "Topic -1": 63,
+    "Weather Prediction and Renewable Energy": 3,
+    "Wireless Communication and Signal Processing": 5
+  },
+  {
+    "date": "2025-03-31",
+    "AI Security and Adversarial Defense": 9,
+    "Causal Inference and Treatment Effects": 1,
+    "Cross-lingual Reasoning and SQL Tasks": 27,
+    "Emotion and Voice Recognition": 15,
+    "Graph Representations and Network Analysis": 1,
+    "Neuromorphic and Chemical Modeling": 6,
+    "Non-Euclidean Clustering and Learning": 1,
+    "Optimization and Scheduling Algorithms": 0,
+    "Reinforcement Learning and Bandits": 5,
+    "Topic -1": 38,
+    "Weather Prediction and Renewable Energy": 1,
+    "Wireless Communication and Signal Processing": 1
+  },
+  {
+    "date": "2025-04-01",
+    "AI Security and Adversarial Defense": 7,
+    "Causal Inference and Treatment Effects": 3,
+    "Cross-lingual Reasoning and SQL Tasks": 19,
+    "Emotion and Voice Recognition": 16,
+    "Graph Representations and Network Analysis": 4,
+    "Neuromorphic and Chemical Modeling": 11,
+    "Non-Euclidean Clustering and Learning": 1,
+    "Optimization and Scheduling Algorithms": 0,
+    "Reinforcement Learning and Bandits": 10,
+    "Topic -1": 39,
+    "Weather Prediction and Renewable Energy": 2,
+    "Wireless Communication and Signal Processing": 1
+  },
+  {
+    "date": "2025-04-02",
+    "AI Security and Adversarial Defense": 5,
+    "Causal Inference and Treatment Effects": 1,
+    "Cross-lingual Reasoning and SQL Tasks": 17,
+    "Emotion and Voice Recognition": 15,
+    "Graph Representations and Network Analysis": 4,
+    "Neuromorphic and Chemical Modeling": 8,
+    "Non-Euclidean Clustering and Learning": 0,
+    "Optimization and Scheduling Algorithms": 0,
+    "Reinforcement Learning and Bandits": 20,
+    "Topic -1": 34,
+    "Weather Prediction and Renewable Energy": 4,
+    "Wireless Communication and Signal Processing": 1
+  },
+  {
+    "date": "2025-04-03",
+    "AI Security and Adversarial Defense": 4,
+    "Causal Inference and Treatment Effects": 4,
+    "Cross-lingual Reasoning and SQL Tasks": 1,
+    "Emotion and Voice Recognition": 2,
+    "Graph Representations and Network Analysis": 2,
+    "Neuromorphic and Chemical Modeling": 1,
+    "Non-Euclidean Clustering and Learning": 0,
+    "Optimization and Scheduling Algorithms": 0,
+    "Reinforcement Learning and Bandits": 8,
+    "Topic -1": 10,
+    "Weather Prediction and Renewable Energy": 1,
+    "Wireless Communication and Signal Processing": 1
+  },
+  {
+    "date": "2025-04-04",
+    "AI Security and Adversarial Defense": 15,
+    "Causal Inference and Treatment Effects": 4,
+    "Cross-lingual Reasoning and SQL Tasks": 55,
+    "Emotion and Voice Recognition": 54,
+    "Graph Representations and Network Analysis": 2,
+    "Neuromorphic and Chemical Modeling": 33,
+    "Non-Euclidean Clustering and Learning": 0,
+    "Optimization and Scheduling Algorithms": 0,
+    "Reinforcement Learning and Bandits": 15,
+    "Topic -1": 91,
+    "Weather Prediction and Renewable Energy": 4,
+    "Wireless Communication and Signal Processing": 0
+  },
+  {
+    "date": "2025-04-05",
+    "AI Security and Adversarial Defense": 10,
+    "Causal Inference and Treatment Effects": 2,
+    "Cross-lingual Reasoning and SQL Tasks": 37,
+    "Emotion and Voice Recognition": 32,
+    "Graph Representations and Network Analysis": 1,
+    "Neuromorphic and Chemical Modeling": 21,
+    "Non-Euclidean Clustering and Learning": 0,
+    "Optimization and Scheduling Algorithms": 0,
+    "Reinforcement Learning and Bandits": 5,
+    "Topic -1": 73,
+    "Weather Prediction and Renewable Energy": 6,
+    "Wireless Communication and Signal Processing": 0
+  },
+  {
+    "date": "2025-04-06",
+    "AI Security and Adversarial Defense": 14,
+    "Causal Inference and Treatment Effects": 1,
+    "Cross-lingual Reasoning and SQL Tasks": 43,
+    "Emotion and Voice Recognition": 34,
+    "Graph Representations and Network Analysis": 2,
+    "Neuromorphic and Chemical Modeling": 12,
+    "Non-Euclidean Clustering and Learning": 0,
+    "Optimization and Scheduling Algorithms": 0,
+    "Reinforcement Learning and Bandits": 3,
+    "Topic -1": 70,
+    "Weather Prediction and Renewable Energy": 5,
+    "Wireless Communication and Signal Processing": 0
+  },
+  {
+    "date": "2025-04-07",
+    "AI Security and Adversarial Defense": 2,
+    "Causal Inference and Treatment Effects": 3,
+    "Cross-lingual Reasoning and SQL Tasks": 14,
+    "Emotion and Voice Recognition": 25,
+    "Graph Representations and Network Analysis": 4,
+    "Neuromorphic and Chemical Modeling": 2,
+    "Non-Euclidean Clustering and Learning": 0,
+    "Optimization and Scheduling Algorithms": 0,
+    "Reinforcement Learning and Bandits": 2,
+    "Topic -1": 24,
+    "Weather Prediction and Renewable Energy": 1,
+    "Wireless Communication and Signal Processing": 0
+  },
+  {
+    "date": "2025-04-08",
+    "AI Security and Adversarial Defense": 2,
+    "Causal Inference and Treatment Effects": 7,
+    "Cross-lingual Reasoning and SQL Tasks": 25,
+    "Emotion and Voice Recognition": 26,
+    "Graph Representations and Network Analysis": 2,
+    "Neuromorphic and Chemical Modeling": 15,
+    "Non-Euclidean Clustering and Learning": 0,
+    "Optimization and Scheduling Algorithms": 0,
+    "Reinforcement Learning and Bandits": 10,
+    "Topic -1": 47,
+    "Weather Prediction and Renewable Energy": 3,
+    "Wireless Communication and Signal Processing": 0
+  },
+  {
+    "date": "2025-04-09",
+    "AI Security and Adversarial Defense": 4,
+    "Causal Inference and Treatment Effects": 0,
+    "Cross-lingual Reasoning and SQL Tasks": 24,
+    "Emotion and Voice Recognition": 23,
+    "Graph Representations and Network Analysis": 3,
+    "Neuromorphic and Chemical Modeling": 8,
+    "Non-Euclidean Clustering and Learning": 0,
+    "Optimization and Scheduling Algorithms": 0,
+    "Reinforcement Learning and Bandits": 9,
+    "Topic -1": 38,
+    "Weather Prediction and Renewable Energy": 3,
+    "Wireless Communication and Signal Processing": 0
+  },
+  {
+    "date": "2025-04-10",
+    "AI Security and Adversarial Defense": 17,
+    "Causal Inference and Treatment Effects": 0,
+    "Cross-lingual Reasoning and SQL Tasks": 45,
+    "Emotion and Voice Recognition": 37,
+    "Graph Representations and Network Analysis": 6,
+    "Neuromorphic and Chemical Modeling": 15,
+    "Non-Euclidean Clustering and Learning": 0,
+    "Optimization and Scheduling Algorithms": 0,
+    "Reinforcement Learning and Bandits": 5,
+    "Topic -1": 73,
+    "Weather Prediction and Renewable Energy": 5,
+    "Wireless Communication and Signal Processing": 0
+  },
+  {
+    "date": "2025-04-11",
+    "AI Security and Adversarial Defense": 8,
+    "Causal Inference and Treatment Effects": 0,
+    "Cross-lingual Reasoning and SQL Tasks": 42,
+    "Emotion and Voice Recognition": 52,
+    "Graph Representations and Network Analysis": 2,
+    "Neuromorphic and Chemical Modeling": 18,
+    "Non-Euclidean Clustering and Learning": 0,
+    "Optimization and Scheduling Algorithms": 0,
+    "Reinforcement Learning and Bandits": 10,
+    "Topic -1": 57,
+    "Weather Prediction and Renewable Energy": 4,
+    "Wireless Communication and Signal Processing": 0
+  },
+  {
+    "date": "2025-04-12",
+    "AI Security and Adversarial Defense": 10,
+    "Causal Inference and Treatment Effects": 0,
+    "Cross-lingual Reasoning and SQL Tasks": 49,
+    "Emotion and Voice Recognition": 32,
+    "Graph Representations and Network Analysis": 2,
+    "Neuromorphic and Chemical Modeling": 13,
+    "Non-Euclidean Clustering and Learning": 0,
+    "Optimization and Scheduling Algorithms": 0,
+    "Reinforcement Learning and Bandits": 13,
+    "Topic -1": 77,
+    "Weather Prediction and Renewable Energy": 3,
+    "Wireless Communication and Signal Processing": 0
+  },
+  {
+    "date": "2025-04-13",
+    "AI Security and Adversarial Defense": 22,
+    "Causal Inference and Treatment Effects": 0,
+    "Cross-lingual Reasoning and SQL Tasks": 71,
+    "Emotion and Voice Recognition": 62,
+    "Graph Representations and Network Analysis": 9,
+    "Neuromorphic and Chemical Modeling": 17,
+    "Non-Euclidean Clustering and Learning": 0,
+    "Optimization and Scheduling Algorithms": 0,
+    "Reinforcement Learning and Bandits": 6,
+    "Topic -1": 105,
+    "Weather Prediction and Renewable Energy": 2,
+    "Wireless Communication and Signal Processing": 0
+  },
+  {
+    "date": "2025-04-14",
+    "AI Security and Adversarial Defense": 14,
+    "Causal Inference and Treatment Effects": 0,
+    "Cross-lingual Reasoning and SQL Tasks": 45,
+    "Emotion and Voice Recognition": 44,
+    "Graph Representations and Network Analysis": 0,
+    "Neuromorphic and Chemical Modeling": 17,
+    "Non-Euclidean Clustering and Learning": 0,
+    "Optimization and Scheduling Algorithms": 0,
+    "Reinforcement Learning and Bandits": 28,
+    "Topic -1": 82,
+    "Weather Prediction and Renewable Energy": 14,
+    "Wireless Communication and Signal Processing": 0
+  },
+  {
+    "date": "2025-04-15",
+    "AI Security and Adversarial Defense": 11,
+    "Causal Inference and Treatment Effects": 0,
+    "Cross-lingual Reasoning and SQL Tasks": 45,
+    "Emotion and Voice Recognition": 34,
+    "Graph Representations and Network Analysis": 0,
+    "Neuromorphic and Chemical Modeling": 12,
+    "Non-Euclidean Clustering and Learning": 0,
+    "Optimization and Scheduling Algorithms": 0,
+    "Reinforcement Learning and Bandits": 0,
+    "Topic -1": 60,
+    "Weather Prediction and Renewable Energy": 0,
+    "Wireless Communication and Signal Processing": 0
+  },
+  {
+    "date": "2025-04-16",
+    "AI Security and Adversarial Defense": 21,
+    "Causal Inference and Treatment Effects": 0,
+    "Cross-lingual Reasoning and SQL Tasks": 105,
+    "Emotion and Voice Recognition": 96,
+    "Graph Representations and Network Analysis": 0,
+    "Neuromorphic and Chemical Modeling": 54,
+    "Non-Euclidean Clustering and Learning": 0,
+    "Optimization and Scheduling Algorithms": 0,
+    "Reinforcement Learning and Bandits": 0,
+    "Topic -1": 163,
+    "Weather Prediction and Renewable Energy": 0,
+    "Wireless Communication and Signal Processing": 0
+  }
+]);
 
   const [arxivLinks, setArxivLinks] = useState([
     { title: 'Attention Is All You Need: A Comprehensive Survey', id: '2406.12345', url: 'https://arxiv.org/abs/2406.12345' },
@@ -138,8 +491,36 @@ Though smaller in volume, RL research demonstrates significant quality improveme
     fetchDataForDate(selectedDate);
   };
 
-  const colors = ['#8884d8', '#82ca9d', '#ffc658', '#ff7c7c', '#8dd1e1'];
-  const keywords = ['Transformers', 'Diffusion Models', 'Reinforcement Learning', 'Computer Vision', 'NLP'];
+  // useEffect(() => {
+  //   const fetchTrendData = async () => {
+  //     try {
+  //       const response = await fetch('/api/trend_data', {
+  //         method: 'GET'
+  //       });
+
+  //       const arrayFromBackend = await response.json();  // get JSON array
+  //       console.log('Received:', arrayFromBackend);
+  //       setTrendData(arrayFromBackend);  // store it in state
+  //     } catch (err) {
+  //       console.error('Failed to fetch trend data:', err);
+  //     }
+  //   };
+
+  //   fetchTrendData();
+  // }, []);
+
+  const colors = ['#8884d8', '#82ca9d', '#ffc658', '#ff7c7c', '#8dd1e1', '#14B8A6', '#6366F1', '#E11D48', '#22C55E'];
+  const keywords = [
+    "AI Security and Adversarial Defense",
+    "Causal Inference and Treatment Effects",
+    "Cross-lingual Reasoning and SQL Tasks",
+    "Emotion and Voice Recognition",
+    "Graph Representations and Network Analysis",
+    "Neuromorphic and Chemical Modeling",
+    "Non-Euclidean Clustering and Learning",
+    "Optimization and Scheduling Algorithms",
+    "Reinforcement Learning and Bandits",
+  ];
 
   return (
     <div className="ml-tracker">
@@ -187,7 +568,59 @@ Though smaller in volume, RL research demonstrates significant quality improveme
           </div>
 
           {/* Middle Column - Chart */}
-          <Chart />
+          <div className="ml-tracker-card ml-tracker-chart-column">
+            <h2 className="ml-tracker-section-title ml-tracker-chart-title">
+              Research Trends
+            </h2>
+
+            {/* Set a fixed height to make ResponsiveContainer work */}
+            <div className="ml-tracker-chart-container" style={{ height: '400px' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={trendData} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                  <XAxis 
+                    dataKey="date" 
+                    stroke="#9CA3AF"
+                    fontSize={12}
+                    tickFormatter={(value) =>
+                      new Date(value).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+                    }
+                  />
+                  <YAxis 
+                    stroke="#9CA3AF"
+                    fontSize={12}
+                    label={{
+                      value: 'Papers Published',
+                      angle: -90,
+                      position: 'insideLeft',
+                      style: { textAnchor: 'middle', fill: '#9CA3AF' }
+                    }}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: '#1F2937',
+                      border: '1px solid #374151',
+                      borderRadius: '8px',
+                      color: 'white'
+                    }}
+                  />
+                  <Legend />
+                  {keywords.map((keyword, index) => (
+                    <Line
+                      key={keyword}
+                      type="monotone"
+                      dataKey={keyword}
+                      stroke={colors[index]}
+                      strokeWidth={3}
+                      dot={{ r: 4 }}
+                      activeDot={{ r: 6 }}
+                    />
+                  ))}
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
 
           {/* Right Column - Chat */}
           <div className="ml-tracker-card ml-tracker-chat-column">

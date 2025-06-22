@@ -81,11 +81,14 @@ def get_blog_src_article(article_id):
     doc = loader.load()
     return doc[0].page_content
 
-@app.route("/api/chart")
-def chart():
-    # TODO: Put the chart generation here
-    return get_trend_viz(api_key)
+# @app.route("/api/chart")
+# def chart():
+#     # TODO: Put the chart generation here
+#     return get_trend_viz(api_key)
 
+@app.route("/api/trend_data", methods=["GET"])
+def trend_data():
+    return get_trend_viz_arr(api_key)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)  # Ensure port 5000

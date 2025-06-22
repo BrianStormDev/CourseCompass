@@ -10,6 +10,7 @@ from transformers import pipeline
 from bertopic import BERTopic
 from datetime import datetime, timedelta
 from sklearn.feature_extraction.text import CountVectorizer
+from collections import defaultdict
 
 # Create extensive stopword list for academic papers
 academic_stopwords = [
@@ -31,8 +32,10 @@ academic_stopwords = [
     'their', 'these', 'such', 'different', 'various', 'data', 'test', 'testing', 'compared', 'comparison', 'state', 'art'
 ]
 
+window_length = 90
+
 def populate_dataframe():
-    window_length, curr, step = 90, 0, 2000
+    curr, step = 0, 200
     documents, timestamps, ids, author_lst  = [], [], [], []
 
     while True:
@@ -103,6 +106,44 @@ def get_trend_viz(api_key):
     fig = topic_model.visualize_topics_over_time(topics_over_time, custom_labels=True)
     graph_json = json.loads(fig.to_json())
     return flask.jsonify(graph_json)
+
+def get_trend_viz_arr(api_key):
+    df, topic_model = populate_dataframe()
+    label_dict = generate_topic_labels_claude(topic_model, api_key)
+    topic_model.set_topic_labels(label_dict)
+
+    # Time-based trend analysis:
+    topics_over_time = topic_model.topics_over_time(df['text'], df['timestamp'], nr_bins=30)
+
+    return get_javascript_arr(topics_over_time, label_dict)
+
+def get_javascript_arr(topics_over_time, label_dict):
+    topic_trends = defaultdict(list)
+
+    for _, row in topics_over_time.iterrows():
+        topic_id = row['Topic']
+        freq = row['Frequency']
+        topic_trends[topic_id].append(freq)
+
+    labeled_trends = {
+        label_dict.get(topic_id, f"Topic {topic_id}"): freqs
+        for topic_id, freqs in topic_trends.items()
+    }
+
+    labeled_trends_dict = dict(sorted(labeled_trends.items()))
+    max_len = max(len(lst) for lst in labeled_trends_dict.values())
+    start_date = datetime.now() - timedelta(days=window_length)
+    date_list = [(start_date + timedelta(days=i)).strftime("%Y-%m-%d") for i in range(max_len)]
+    trend_data = []
+
+    for i in range(max_len):
+        day_entry = {'date': date_list[i]}
+        for topic, freqs in labeled_trends_dict.items():
+            day_entry[topic] = freqs[i] if i < len(freqs) else 0
+        trend_data.append(day_entry)
+
+    js_output = json.dumps(trend_data, indent=2)
+    print(js_output)
 
 def generate_topic_labels_claude(topic_model, api_key, verbose=False):
     topic_info = topic_model.get_topic_info()
