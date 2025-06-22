@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Send, Calendar, TrendingUp } from 'lucide-react';
 import './App.css';
@@ -10,6 +10,7 @@ const App = () => {
   ]);
   const [chatInput, setChatInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const chatMessagesRef = useRef(null);
 
   // Sample data - in real implementation, this would come from Python backend
   const [trendData, setTrendData] = useState([
@@ -98,6 +99,13 @@ Though smaller in volume, RL research demonstrates significant quality improveme
 - Multi-agent systems for complex coordination tasks
 - Integration with large language models for enhanced decision-making
 - Applications in robotics and autonomous systems`);
+
+  // Auto-scroll effect
+  useEffect(() => {
+    if (chatMessagesRef.current) {
+      chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
+    }
+  }, [chatMessages, loading]);
 
   // API Integration functions - these would connect to your Python backend
   const fetchDataForDate = async (date) => {
@@ -254,7 +262,7 @@ Though smaller in volume, RL research demonstrates significant quality improveme
             </h2>
             
             {/* Chat Messages */}
-            <div className="ml-tracker-chat-messages">
+            <div className="ml-tracker-chat-messages" ref={chatMessagesRef}>
               {chatMessages.map((message, index) => (
                 <div 
                   key={index} 
