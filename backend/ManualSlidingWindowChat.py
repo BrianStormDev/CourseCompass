@@ -1,9 +1,4 @@
-import json
 import anthropic
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-import database
-from datetime import datetime
 
 class ManualSlidingWindowChat:
     def __init__(self, api_key, window_size=10, max_tokens=1024):

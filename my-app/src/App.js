@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+// import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Send, Calendar, TrendingUp } from 'lucide-react';
 import './App.css';
+import Chart from './Chart.js';
 
 const App = () => {
   const [selectedDate, setSelectedDate] = useState('2024-06-21');
@@ -186,49 +187,7 @@ Though smaller in volume, RL research demonstrates significant quality improveme
           </div>
 
           {/* Middle Column - Chart */}
-          <div className="ml-tracker-card ml-tracker-chart-column">
-            <h2 className="ml-tracker-section-title ml-tracker-chart-title">
-              Research Trends
-            </h2>
-            <div className="ml-tracker-chart-container">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={trendData} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                  <XAxis 
-                    dataKey="date" 
-                    stroke="#9CA3AF"
-                    fontSize={12}
-                    tickFormatter={(value) => new Date(value).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                  />
-                  <YAxis 
-                    stroke="#9CA3AF"
-                    fontSize={12}
-                    label={{ value: 'Papers Published', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fill: '#9CA3AF' } }}
-                  />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: '#1F2937', 
-                      border: '1px solid #374151',
-                      borderRadius: '8px',
-                      color: 'white'
-                    }}
-                  />
-                  <Legend />
-                  {keywords.map((keyword, index) => (
-                    <Line 
-                      key={keyword}
-                      type="monotone" 
-                      dataKey={keyword} 
-                      stroke={colors[index]}
-                      strokeWidth={3}
-                      dot={{ r: 4 }}
-                      activeDot={{ r: 6 }}
-                    />
-                  ))}
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
+          <Chart />
 
           {/* Right Column - Chat */}
           <div className="ml-tracker-card ml-tracker-chat-column">

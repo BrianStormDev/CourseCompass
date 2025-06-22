@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import database
 from ManualSlidingWindowChat import ManualSlidingWindowChat 
+from trend_viz import *
 
 # Get the appropriate API Key
 with open('config.json', 'r') as f:
@@ -17,7 +18,8 @@ CORS(app)
 database.init_db()
 
 # Initialize the chat
-chat_instance = ManualSlidingWindowChat(config['anthropic_api_key'])
+api_key = config['anthropic_api_key']
+chat_instance = ManualSlidingWindowChat(api_key)
 
 @app.route("/api/chat")
 def chat():
@@ -80,6 +82,8 @@ def claudeChat():
 @app.route("/api/chart")
 def chart():
     # TODO: Put the chart generation here
+    return get_trend_viz(api_key)
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)  # Ensure port 5000
