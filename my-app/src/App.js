@@ -303,7 +303,7 @@ Though smaller in volume, RL research demonstrates significant quality improveme
               flex: 1
             }}>
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={trendData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+                <LineChart data={trendData} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                   <XAxis 
                     dataKey="date" 
@@ -482,6 +482,7 @@ Though smaller in volume, RL research demonstrates significant quality improveme
           borderRadius: '16px',
           border: '1px solid rgba(51, 65, 85, 0.5)',
           padding: '40px',
+          marginTop: '100px',
           marginBottom: '32px'
         }}>
           <h2 style={{
