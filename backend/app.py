@@ -3,16 +3,21 @@ import anthropic as Anthropic
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import database
+from ManualSlidingWindowChat import ManualSlidingWindowChat 
 
+# Get the appropriate API Key
 with open('config.json', 'r') as f:
     config = json.load(f)
-    
-client = Anthropic.Anthropic(api_key=config['anthropic_api_key'])
 
+# Configure the app
 app = Flask(__name__)
 CORS(app)
+
 # Init the db
 database.init_db()
+
+# Initialize the chat
+chat_instance = ManualSlidingWindowChat("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")
 
 @app.route("/api/chat")
 def chat():
@@ -26,41 +31,26 @@ def getArxivLinks():
 
 @app.route("/api/claudeChat", methods=['POST'])
 def claudeChat():
-    print("I am processing")
     # Get the json data from the request
     if request.method == "POST":
+        # Get the data from the request
         data = request.get_json()
-
-        print(data)
 
         # Access the data
         prompt = data.get('message')
+
+        # See if we can get the appropriate chat history
         context = data.get('context', {})
 
-        # print(f"Received message: {message}")
-        # print(f"Context: {context}")
-
-        response = client.messages.create(
-            model="claude-sonnet-4-20250514", #"",
-            max_tokens=2048,
-            messages=[
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ],
-            tools=[{
-                "type": "web_search_20250305",
-                "name": "web_search",
-                "max_uses": 5
-            }]
-        )
+        # Send the client messages
+        response = chat_instance.get_response(prompt)
+        # Gets the response as a string
         
         # Process and return response
-        return jsonify({
-            "response": response.content[0].text,
-            "received_context": context
+        response_json = jsonify({
+            "response": response
         })
+        return response_json
 
 
 if __name__ == "__main__":
