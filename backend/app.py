@@ -37,10 +37,35 @@ def claudeChat():
         data = request.get_json()
 
         # Access the data
-        prompt = data.get('message')
+        message = data.get('message')
 
         # See if we can get the appropriate chat history
         context = data.get('context', {})
+        
+        # Unpack context
+        date = context.get("date")
+        articles = context.get("articles", [])
+        initial = context.get("initial", "")
+
+        # Build the prompt string
+        prompt_parts = []
+
+        if initial:
+            prompt_parts.append(f"Instruction: {initial}")
+
+        if date:
+            prompt_parts.append(f"Date: {date}")
+
+        if articles:
+            prompt_parts.append("Relevant Articles:")
+            for i, article in enumerate(articles, 1):
+                prompt_parts.append(f"{i}. {article}")
+
+        if message:
+            prompt_parts.append(f"User Message: {message}")
+
+        # Final prompt to pass to Claude
+        prompt = "\n\n".join(prompt_parts)
 
         # Send the client messages
         response = chat_instance.get_response(prompt)
@@ -52,6 +77,9 @@ def claudeChat():
         })
         return response_json
 
+@app.route("/api/chart")
+def chart():
+    # TODO: Put the chart generation here
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

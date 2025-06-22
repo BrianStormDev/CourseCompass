@@ -115,11 +115,9 @@ Though smaller in volume, RL research demonstrates significant quality improveme
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           message: chatInput,
-          context: { date: selectedDate, articles: arxivLinks }
+          context: { date: selectedDate, articles: arxivLinks, initial: "Don't use Markdown in your responses. Start with short response and expand if requested"}
         })
       });
-
-      console.log(response);
       
       const data = await response.json();
       const assistantMessage = { role: 'assistant', content: data.response };
