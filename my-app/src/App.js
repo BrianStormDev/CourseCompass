@@ -11,6 +11,8 @@ const App = () => {
   ]);
   const [chatInput, setChatInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [topThreeArxivTexts, setTopThreeArxivTexts] = useState([]);
+
   const chatMessagesRef = useRef(null);
 
   // Sample data - in real implementation, this would come from Python backend
@@ -81,6 +83,20 @@ Though smaller in volume, RL research demonstrates significant quality improveme
     }
   }, [chatMessages, loading]);
 
+  useEffect(() => {
+    async function fetchArxivTexts() {
+        let top_three_arxiv_texts = [];
+        for (let i = 0; i < 3; i++) {
+            let arxiv_id = arxivLinks[i].id;
+            const response = await fetch(`/api/get_blog_src_article/${arxiv_id}`);
+            let res = await response.text();
+            top_three_arxiv_texts.push(res);
+        }
+        setTopThreeArxivTexts(top_three_arxiv_texts);
+    }
+    fetchArxivTexts();
+  }, [arxivLinks]);
+
   // API Integration functions - these would connect to your Python backend
   const fetchDataForDate = async (date) => {
     setLoading(true);
@@ -110,13 +126,13 @@ Though smaller in volume, RL research demonstrates significant quality improveme
     console.log(userMessage);
 
     try {
-      // Replace with actual API call to Python backend
+      let initialText = `Don't use Markdown in your responses. Start with short response and expand if requested. Also, below are 3 research papers that you will use as context to answer any of the subsequent queries.\nArticle 1\n${topThreeArxivTexts[0]}\n\nArticle 2\n${topThreeArxivTexts[1]}\n\nArticle 3\n${topThreeArxivTexts[2]}`
       const response = await fetch('/api/claudeChat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           message: chatInput,
-          context: { date: selectedDate, articles: arxivLinks, initial: "Don't use Markdown in your responses. Start with short response and expand if requested"}
+          context: { date: selectedDate, articles: arxivLinks, initial: initialText}
         })
       });
       

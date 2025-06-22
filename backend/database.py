@@ -41,12 +41,6 @@ def init_db():
     # Table for the trends
     # Feed to to BERTopic, which is a semantic analysis tool
     # We want to plot the popularity of the trends
-    # FINISH THIS TABLE
-    # cur.execute("""
-    #     CREATE TABLE IF NOT EXISTS trends(
-    #
-    #     )
-    # """)
     cur.close()
 
 # The 5 articles that we display on the sidebar are based on popularity
