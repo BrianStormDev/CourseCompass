@@ -11,7 +11,6 @@ class Blog:
 class Article:
     article_id: str
     article_title: str
-    article_text: str
     published_date: str
     url: str
     popularity: int

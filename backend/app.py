@@ -2,6 +2,7 @@ import anthropic
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import database
+from langchain_community.document_loaders import ArxivLoader
 
 # api_key = 'API_KEY'
 # client = anthropic.Anthropic(api_key=api_key)
@@ -33,11 +34,6 @@ CORS(app)
 # Init the db
 database.init_db()
 
-@app.route("/api/chat")
-def chat():
-    # RAG STUFF GOES HERE
-    pass
-
 @app.route("/api/getArxivLinks")
 def getArxivLinks():
     title, id, url = database.select_honorable_article_shoutouts()
@@ -61,6 +57,12 @@ def claudeChat():
             "response": f"You said: {message}",
             "received_context": context
         })
+
+@app.route("/api/get_blog_src_article/<article_id>")
+def get_blog_src_article(article_id):
+    loader = ArxivLoader(query=article_id, load_max_docs=1)  # Replace with your arXiv ID
+    doc = loader.load()
+    return doc[0].page_content
 
 
 if __name__ == "__main__":

@@ -23,7 +23,6 @@ def init_db():
         CREATE TABLE IF NOT EXISTS articles(
             article_id TEXT PRIMARY KEY UNIQUE,
             article_title TEXT,
-            article_text TEXT,
             published_date TEXT,
             url TEXT,
             popularity INTEGER
@@ -50,13 +49,6 @@ def init_db():
     # """)
     cur.close()
 
-def select_article_content_via_blog_id(blog_id):
-    cur = conn.cursor()
-    cur.execute("SELECT art.article_text FROM articles AS art INNER JOIN blogs ON art.article_id = blog.article_id WHERE art.article_id = ?", (blog_id,));
-    res = cur.fetchall()
-    cur.close()
-    return res
-
 # The 5 articles that we display on the sidebar are based on popularity
 def select_honorable_article_shoutouts():
     cur = conn.cursor()
@@ -68,7 +60,7 @@ def select_honorable_article_shoutouts():
 @unique_skip
 def insert_new_article(a: Article):
     cur = conn.cursor()
-    cur.execute("INSERT INTO articles(article_id, article_title, article_text, published_date, url, popularity) VALUES(?, ?, ?, ?, ?, ?)", (a.article_id, a.article_title, a.article_text, a.published_date, a.url, a.popularity))
+    cur.execute("INSERT INTO articles(article_id, article_title, published_date, url, popularity) VALUES(?, ?, ?, ?, ?)", (a.article_id, a.article_title, a.published_date, a.url, a.popularity))
     conn.commit()
     cur.close()
 
