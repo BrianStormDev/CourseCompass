@@ -3,6 +3,7 @@ import anthropic as Anthropic
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import database
+from langchain_community.document_loaders import ArxivLoader
 from ManualSlidingWindowChat import ManualSlidingWindowChat 
 from trend_viz import *
 
@@ -20,11 +21,6 @@ database.init_db()
 # Initialize the chat
 api_key = config['anthropic_api_key']
 chat_instance = ManualSlidingWindowChat(api_key)
-
-@app.route("/api/chat")
-def chat():
-    # RAG STUFF GOES HERE
-    pass
 
 @app.route("/api/getArxivLinks")
 def getArxivLinks():
@@ -78,6 +74,12 @@ def claudeChat():
             "response": response
         })
         return response_json
+
+@app.route("/api/get_blog_src_article/<article_id>")
+def get_blog_src_article(article_id):
+    loader = ArxivLoader(query=article_id, load_max_docs=1)  # Replace with your arXiv ID
+    doc = loader.load()
+    return doc[0].page_content
 
 @app.route("/api/chart")
 def chart():
