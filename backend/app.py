@@ -1,38 +1,24 @@
-import anthropic
+import json
+import anthropic as Anthropic
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import database
 from langchain_community.document_loaders import ArxivLoader
+from ManualSlidingWindowChat import ManualSlidingWindowChat 
 
-# api_key = 'API_KEY'
-# client = anthropic.Anthropic(api_key=api_key)
-#
-# prompt = ""
-#
-# response = client.messages.create(
-#     model="claude-sonnet-4-20250514", #"",
-#     max_tokens=2048,
-#     messages=[
-#         {
-#             "role": "user",
-#             "content": prompt
-#         }
-#     ],
-#     tools=[{
-#         "type": "web_search_20250305",
-#         "name": "web_search",
-#         "max_uses": 5
-#     }]
-# )
+# Get the appropriate API Key
+with open('config.json', 'r') as f:
+    config = json.load(f)
 
-# text_parts = [block.text for block in response.content if block.type == 'text']
-# full_response = ''.join(text_parts)
-# print(full_response)
-
+# Configure the app
 app = Flask(__name__)
 CORS(app)
+
 # Init the db
 database.init_db()
+
+# Initialize the chat
+chat_instance = ManualSlidingWindowChat(config['anthropic_api_key'])
 
 @app.route("/api/getArxivLinks")
 def getArxivLinks():
@@ -43,20 +29,49 @@ def getArxivLinks():
 def claudeChat():
     # Get the json data from the request
     if request.method == "POST":
+        # Get the data from the request
         data = request.get_json()
 
         # Access the data
         message = data.get('message')
-        context = data.get('context', {})
 
-        print(f"Received message: {message}")
-        print(f"Context: {context}")
+        # See if we can get the appropriate chat history
+        context = data.get('context', {})
+        
+        # Unpack context
+        date = context.get("date")
+        articles = context.get("articles", [])
+        initial = context.get("initial", "")
+
+        # Build the prompt string
+        prompt_parts = []
+
+        if initial:
+            prompt_parts.append(f"Instruction: {initial}")
+
+        if date:
+            prompt_parts.append(f"Date: {date}")
+
+        if articles:
+            prompt_parts.append("Relevant Articles:")
+            for i, article in enumerate(articles, 1):
+                prompt_parts.append(f"{i}. {article}")
+
+        if message:
+            prompt_parts.append(f"User Message: {message}")
+
+        # Final prompt to pass to Claude
+        prompt = "\n\n".join(prompt_parts)
+
+        # Send the client messages
+        response = chat_instance.get_response(prompt)
+        # Gets the response as a string
         
         # Process and return response
-        return jsonify({
-            "response": f"You said: {message}",
-            "received_context": context
+        response_json = jsonify({
+            "response": response
         })
+        return response_json
 
 @app.route("/api/get_blog_src_article/<article_id>")
 def get_blog_src_article(article_id):
@@ -64,6 +79,9 @@ def get_blog_src_article(article_id):
     doc = loader.load()
     return doc[0].page_content
 
+@app.route("/api/chart")
+def chart():
+    # TODO: Put the chart generation here
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

@@ -106,6 +106,8 @@ Though smaller in volume, RL research demonstrates significant quality improveme
     setChatInput('');
     setLoading(true);
 
+    console.log(userMessage);
+
     try {
       // Replace with actual API call to Python backend
       const response = await fetch('/api/claudeChat', {
@@ -113,7 +115,7 @@ Though smaller in volume, RL research demonstrates significant quality improveme
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           message: chatInput,
-          context: { date: selectedDate, articles: arxivLinks }
+          context: { date: selectedDate, articles: arxivLinks, initial: "Don't use Markdown in your responses. Start with short response and expand if requested"}
         })
       });
       
@@ -265,7 +267,7 @@ Though smaller in volume, RL research demonstrates significant quality improveme
                 type="text"
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && sendChatMessage()}
+                onKeyDown={(e) => e.key === 'Enter' && sendChatMessage()}
                 placeholder="Ask about the research..."
                 className="ml-tracker-chat-input"
               />
