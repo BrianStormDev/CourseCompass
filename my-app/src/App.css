@@ -1,38 +1,346 @@
-.App {
-  text-align: center;
-}
+/* App.css */
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.ml-tracker {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.ml-tracker-header {
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(168, 85, 247, 0.3);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.ml-tracker-header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 32px;
+}
+
+.ml-tracker-title {
+  font-size: 42px;
+  font-weight: bold;
+  background: linear-gradient(to right, #60a5fa, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+}
+
+.ml-tracker-subtitle {
+  color: #cbd5e1;
+  font-size: 18px;
+  margin: 12px 0 0 0;
+}
+
+.ml-tracker-main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 32px;
+}
+
+.ml-tracker-top-section {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 32px;
+  height: 600px;
+}
+
+.ml-tracker-card {
+  background-color: rgba(30, 41, 59, 0.5);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  border: 1px solid rgba(51, 65, 85, 0.5);
+  padding: 28px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ml-tracker-papers-column {
+  width: 320px;
+}
+
+.ml-tracker-chart-column {
+  flex: 1;
+}
+
+.ml-tracker-chat-column {
+  width: 340px;
+}
+
+.ml-tracker-section-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 24px 0;
+}
+
+.ml-tracker-papers-title {
+  color: #f87171;
+}
+
+.ml-tracker-chart-title {
+  color: #6ee7b7;
+}
+
+.ml-tracker-chat-title {
+  color: #c084fc;
+}
+
+.ml-tracker-papers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.ml-tracker-paper-link {
+  display: block;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: rgba(51, 65, 85, 0.3);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.ml-tracker-paper-link:hover {
+  background-color: rgba(71, 85, 105, 0.4);
+  border-color: rgba(96, 165, 250, 0.5);
+}
+
+.ml-tracker-paper-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: #93c5fd;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.ml-tracker-paper-id {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.ml-tracker-chart-container {
+  flex: 1;
+}
+
+.ml-tracker-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ml-tracker-message-container {
+  display: flex;
+}
+
+.ml-tracker-message-container.user {
+  justify-content: flex-end;
+}
+
+.ml-tracker-message-container.assistant {
+  justify-content: flex-start;
+}
+
+.ml-tracker-message {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.ml-tracker-message.user {
+  background-color: #2563eb;
+  color: white;
+}
+
+.ml-tracker-message.assistant {
+  background-color: #374151;
+  color: #e2e8f0;
+}
+
+.ml-tracker-typing-indicator {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.ml-tracker-typing-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #94a3b8;
+  border-radius: 50%;
+  animation: bounce 1.4s infinite;
+}
+
+.ml-tracker-typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.ml-tracker-typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.ml-tracker-chat-input-container {
+  display: flex;
+  gap: 12px;
+}
+
+.ml-tracker-chat-input {
+  flex: 1;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  background-color: #374151;
+  border: 1px solid #4b5563;
+  border-radius: 10px;
+  color: white;
+  outline: none;
+  font-size: 14px;
+}
+
+.ml-tracker-chat-input:focus {
+  border-color: #a855f7;
+}
+
+.ml-tracker-send-button {
+  padding: 12px 16px;
+  background-color: #7c3aed;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.ml-tracker-send-button:hover:not(:disabled) {
+  background-color: #6d28d9;
+}
+
+.ml-tracker-send-button:disabled {
+  background-color: #4b5563;
+  cursor: not-allowed;
+}
+
+.ml-tracker-summary-section {
+  background-color: rgba(30, 41, 59, 0.5);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  border: 1px solid rgba(51, 65, 85, 0.5);
+  padding: 40px;
+  margin-top: 100px;
+  margin-bottom: 32px;
+}
+
+.ml-tracker-summary-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0 0 32px 0;
+  color: #fbbf24;
+}
+
+.ml-tracker-summary-content {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #e2e8f0;
+}
+
+.ml-tracker-summary-text {
+  white-space: pre-wrap;
+  font-family: inherit;
+  margin: 0;
+}
+
+.ml-tracker-time-travel-container {
+  display: flex;
+  justify-content: center;
+}
+
+.ml-tracker-time-travel {
+  width: 400px;
+  background-color: rgba(30, 41, 59, 0.5);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  border: 1px solid rgba(51, 65, 85, 0.5);
+  padding: 28px;
+}
+
+.ml-tracker-time-travel-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 24px 0;
+  color: #fb923c;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ml-tracker-time-travel-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ml-tracker-date-label {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  color: #cbd5e1;
+  margin-bottom: 12px;
+}
+
+.ml-tracker-date-input {
+  width: 100%;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  background-color: #374151;
+  border: 1px solid #4b5563;
+  border-radius: 10px;
+  color: white;
+  outline: none;
+  font-size: 14px;
+}
+
+.ml-tracker-date-input:focus {
+  border-color: #fb7185;
+}
+
+.ml-tracker-date-button {
+  width: 100%;
+  padding: 12px 20px;
+  background-color: #ea580c;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.ml-tracker-date-button:hover:not(:disabled) {
+  background-color: #c2410c;
+}
+
+.ml-tracker-date-button:disabled {
+  background-color: #4b5563;
+  cursor: not-allowed;
+}
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: translateY(0);
   }
-  to {
-    transform: rotate(360deg);
+  40% {
+    transform: translateY(-6px);
   }
 }
