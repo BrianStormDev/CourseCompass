@@ -6,11 +6,12 @@ import database
 from datetime import datetime
 
 class ManualSlidingWindowChat:
-    def __init__(self, api_key, window_size=10):
+    def __init__(self, api_key, window_size=10, max_tokens=1024):
         self.client = anthropic.Anthropic(api_key=api_key)
         self.chat_history = []
         self.window_size = window_size
         self.model = "claude-sonnet-4-20250514"
+        self.max_tokens = max_tokens
     
     def add_message_with_sliding(self, role, content):
         """Add message and manually maintain sliding window"""
@@ -31,7 +32,7 @@ class ManualSlidingWindowChat:
         try:
             response = self.client.messages.create(
                 model=self.model,
-                max_tokens=2048,
+                max_tokens=self.max_tokens,
                 messages=self.chat_history
             )
             

@@ -17,7 +17,7 @@ CORS(app)
 database.init_db()
 
 # Initialize the chat
-chat_instance = ManualSlidingWindowChat("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")
+chat_instance = ManualSlidingWindowChat(config['anthropic_api_key'])
 
 @app.route("/api/chat")
 def chat():
