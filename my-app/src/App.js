@@ -26,13 +26,23 @@ const App = () => {
     { date: '2024-06-21', 'Transformers': 282, 'Diffusion Models': 228, 'Reinforcement Learning': 181, 'Computer Vision': 225, 'NLP': 264 }
   ]);
 
-  const [arxivLinks, setArxivLinks] = useState([
-    { title: 'Attention Is All You Need: A Comprehensive Survey', id: '2406.12345', url: 'https://arxiv.org/abs/2406.12345' },
-    { title: 'Scaling Laws for Neural Language Models in 2024', id: '2406.12346', url: 'https://arxiv.org/abs/2406.12346' },
-    { title: 'Diffusion Models: Theory and Applications', id: '2406.12347', url: 'https://arxiv.org/abs/2406.12347' },
-    { title: 'Reinforcement Learning with Human Feedback', id: '2406.12348', url: 'https://arxiv.org/abs/2406.12348' },
-    { title: 'Vision Transformers: The Next Generation', id: '2406.12349', url: 'https://arxiv.org/abs/2406.12349' }
-  ]);
+  const [arxivLinks, setArxivLinks] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/getArxivLinks')
+      .then(res => {
+        if (!res.ok) throw new Error('Network response was not ok');
+          console.log(res);
+        return res.json();
+      })
+      .then(data => {
+          console.log(data)
+        setArxivLinks(data);
+      })
+      .catch(error => {
+        console.error('Error fetching arxiv links:', error);
+      });
+  }, []);
 
   const [blogPost, setBlogPost] = useState(`# ML Research Trends - June 21, 2024
 
@@ -86,7 +96,7 @@ Though smaller in volume, RL research demonstrates significant quality improveme
   useEffect(() => {
     async function fetchArxivTexts() {
         let top_three_arxiv_texts = [];
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < Math.min(arxivLinks.length, 3); i++) {
             let arxiv_id = arxivLinks[i].id;
             const response = await fetch(`/api/get_blog_src_article/${arxiv_id}`);
             let res = await response.text();
@@ -126,6 +136,7 @@ Though smaller in volume, RL research demonstrates significant quality improveme
     console.log(userMessage);
 
     try {
+        console.log(topThreeArxivTexts);
       let initialText = `Don't use Markdown in your responses. Start with short response and expand if requested. Also, below are 3 research papers that you will use as context to answer any of the subsequent queries.\nArticle 1\n${topThreeArxivTexts[0]}\n\nArticle 2\n${topThreeArxivTexts[1]}\n\nArticle 3\n${topThreeArxivTexts[2]}`
       const response = await fetch('/api/claudeChat', {
         method: 'POST',

@@ -45,11 +45,18 @@ def init_db():
 
 # The 5 articles that we display on the sidebar are based on popularity
 def select_honorable_article_shoutouts():
-    cur = conn.cursor()
-    cur.execute("SELECT article_title, article_id, url FROM articles ORDER BY popularity DESC");
-    res = cur.fetchall()
-    cur.close()
-    return res
+    # cur = conn.cursor()
+    # cur.execute("SELECT article_title, article_id, url FROM articles ORDER BY popularity DESC LIMIT 5");
+    # res = cur.fetchall()
+    # cur.close()
+    # return res
+    return [
+        { "title": 'Attention Is All You Need: A Comprehensive Survey', "id": '2406.12345', "url": 'https://arxiv.org/abs/2406.12345' },
+        { "title": 'Scaling Laws for Neural Language Models in 2024', "id": '2406.12346', "url": 'https://arxiv.org/abs/2406.12346' },
+        { "title": 'Diffusion Models: Theory and Applications', "id": '2406.12347', "url": 'https://arxiv.org/abs/2406.12347' },
+        { "title": 'Reinforcement Learning with Human Feedback', "id": '2406.12348', "url": 'https://arxiv.org/abs/2406.12348' },
+        { "title": 'Vision Transformers: The Next Generation', "id": '2406.12349', "url": 'https://arxiv.org/abs/2406.12349' }
+      ]
 
 @unique_skip
 def insert_new_article(a: Article):

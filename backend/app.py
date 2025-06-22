@@ -8,7 +8,7 @@ from ManualSlidingWindowChat import ManualSlidingWindowChat
 from trend_viz import *
 
 # Get the appropriate API Key
-with open('config.json', 'r') as f:
+with open('../config.json', 'r') as f:
     config = json.load(f)
 
 # Configure the app
@@ -24,8 +24,9 @@ chat_instance = ManualSlidingWindowChat(api_key)
 
 @app.route("/api/getArxivLinks")
 def getArxivLinks():
-    title, id, url = database.select_honorable_article_shoutouts()
-    return { title: title, id: id, url:url }
+    res = database.select_honorable_article_shoutouts()
+    # return jsonify(list(map(lambda x: dict({"title": x[0], "id": x[1], "url": x[2]}), res)))
+    return jsonify(res)
 
 @app.route("/api/claudeChat", methods=['POST'])
 def claudeChat():
