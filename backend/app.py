@@ -1,32 +1,13 @@
-import anthropic
+import json
+import anthropic as Anthropic
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import database
 
-# api_key = 'API_KEY'
-# client = anthropic.Anthropic(api_key=api_key)
-#
-# prompt = ""
-#
-# response = client.messages.create(
-#     model="claude-sonnet-4-20250514", #"",
-#     max_tokens=2048,
-#     messages=[
-#         {
-#             "role": "user",
-#             "content": prompt
-#         }
-#     ],
-#     tools=[{
-#         "type": "web_search_20250305",
-#         "name": "web_search",
-#         "max_uses": 5
-#     }]
-# )
-
-# text_parts = [block.text for block in response.content if block.type == 'text']
-# full_response = ''.join(text_parts)
-# print(full_response)
+with open('config.json', 'r') as f:
+    config = json.load(f)
+    
+client = Anthropic.Anthropic(api_key=config['anthropic_api_key'])
 
 app = Flask(__name__)
 CORS(app)
@@ -45,20 +26,39 @@ def getArxivLinks():
 
 @app.route("/api/claudeChat", methods=['POST'])
 def claudeChat():
+    print("I am processing")
     # Get the json data from the request
     if request.method == "POST":
         data = request.get_json()
 
+        print(data)
+
         # Access the data
-        message = data.get('message')
+        prompt = data.get('message')
         context = data.get('context', {})
 
-        print(f"Received message: {message}")
-        print(f"Context: {context}")
+        # print(f"Received message: {message}")
+        # print(f"Context: {context}")
+
+        response = client.messages.create(
+            model="claude-sonnet-4-20250514", #"",
+            max_tokens=2048,
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            tools=[{
+                "type": "web_search_20250305",
+                "name": "web_search",
+                "max_uses": 5
+            }]
+        )
         
         # Process and return response
         return jsonify({
-            "response": f"You said: {message}",
+            "response": response.content[0].text,
             "received_context": context
         })
 
