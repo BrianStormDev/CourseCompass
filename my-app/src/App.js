@@ -436,6 +436,7 @@ Though smaller in volume, RL research demonstrates significant quality improveme
                 style={{
                   flex: 1,
                   padding: '12px 16px',
+                  boxSizing: 'border-box',
                   backgroundColor: '#374151',
                   border: '1px solid #4b5563',
                   borderRadius: '10px',
@@ -549,6 +550,7 @@ Though smaller in volume, RL research demonstrates significant quality improveme
                   style={{
                     width: '100%',
                     padding: '12px 16px',
+                    boxSizing: 'border-box',
                     backgroundColor: '#374151',
                     border: '1px solid #4b5563',
                     borderRadius: '10px',
