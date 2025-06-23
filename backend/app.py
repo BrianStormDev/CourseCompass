@@ -8,7 +8,7 @@ from ManualSlidingWindowChat import ManualSlidingWindowChat
 from trend_viz import *
 
 # Get the appropriate API Key
-with open('../config.json', 'r') as f:
+with open('./config.json', 'r') as f:
     config = json.load(f)
 
 # Configure the app
